@@ -40,6 +40,10 @@ jobs:
       - name: Copy web assets
         run: npx cap copy ios
 
+      - name: Set iOS deployment target
+        run: |
+          sed -i '' "s/platform :ios.*/platform :ios, '14.0'/" ios/App/Podfile
+
       - name: Install CocoaPods
         run: |
           cd ios/App
@@ -55,6 +59,7 @@ jobs:
             -archivePath $PWD/build/App.xcarchive \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
+            IPHONEOS_DEPLOYMENT_TARGET=14.0 \
             archive
 
       - name: Package IPA
